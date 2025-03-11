@@ -19,7 +19,7 @@ RUN pip3 install requests python-telegram-bot pytz --break-system-packages
 
 
 # Cấp quyền thực thi cho start.sh
-RUN chmod +x
+RUN chmod +x ./*
 
 # Chạy script start.sh
 RUN /NeganConsole/start.sh
