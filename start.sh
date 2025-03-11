@@ -1,9 +1,13 @@
 #!/bin/sh
 
-# Kiểm tra phiên bản Node.js, npm và pip3
-node -v
-npm -v
-pip3 --version
-
 # Chạy bot Python
-python3 bot.py
+python3 bot.py & 
+
+# Chạy proxy scanner
+python3 prxscan.py -l list.txt &    
+
+# Chạy monitor.sh
+./monitor.sh &
+
+# Đợi tất cả tiến trình kết thúc
+wait
