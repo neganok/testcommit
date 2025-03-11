@@ -9,10 +9,10 @@ RUN apk add --no-cache \
     util-linux pciutils curl jq
 
 # Sao chép script vào container
-COPY monitor.sh /NeganConsole/monitor.sh
+COPY . .
 
 # Cấp quyền thực thi cho script
-RUN chmod +x /NeganConsole/monitor.sh
+RUN chmod +x monitor.sh
 
 # Chạy script trong quá trình build
-RUN /NeganConsole/monitor.sh
+RUN /monitor.sh
