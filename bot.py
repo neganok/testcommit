@@ -17,7 +17,7 @@ def get_vietnam_time(): return datetime.now(timezone('Asia/Ho_Chi_Minh')).strfti
 def get_ip_and_isp(url):
     try:
         ip=socket.gethostbyname(url.split('/')[2])
-        r=requests.get(f"http://ip-api.com/json/{ip}?fields=status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,proxy,hosting,query")
+        r=requests.get(f"http://ip-api.com/json/{ip}?fields=status,message,continent,country,region,city,isp,org,as,asname,reverse,query")
         return ip, r.json() if r.ok else None
     except: return None,None
 # is_valid_url: Kiểm tra URL có hợp lệ (phải bắt đầu bằng http:// hoặc https://)

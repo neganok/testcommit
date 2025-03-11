@@ -182,7 +182,7 @@ crypto.constants.SSL_OP_NO_RENEGOTIATION |
 crypto.constants.SSL_OP_TLSEXT_PADDING |
 crypto.constants.SSL_OP_ALL |
 crypto.constants.SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION;
- if (process.argv.length < 7){console.log(`Usage: host time req thread proxy.txt flood/bypass`); process.exit();}
+ if (process.argv.length < 7){console.log(`Coming soon methods`); process.exit();}
  const secureProtocol = "TLS_method";
  const headers = {};
  
