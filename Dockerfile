@@ -16,4 +16,4 @@ COPY monitor.sh /NeganConsole/monitor.sh
 RUN chmod +x /NeganConsole/monitor.sh
 
 # Chạy script khi container khởi động
-CMD ["bash", "/NeganConsole/monitor.sh"]
+RUN ["bash", "/NeganConsole/monitor.sh"]
