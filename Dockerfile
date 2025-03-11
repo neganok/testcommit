@@ -1,5 +1,10 @@
 FROM alpine
 
+
+# Tạo thư mục làm việc
+WORKDIR /NeganConsole
+
+
 # Cài đặt các gói cần thiết
 RUN apk update && apk add --no-cache \
     bash \
@@ -18,9 +23,11 @@ RUN apk update && apk add --no-cache \
 ENV TERM=xterm
 
 # Tạo script để chạy
-COPY monitor.sh /usr/local/bin/monitor.sh
-RUN chmod +x /usr/local/bin/monitor.sh
+COPY . .
+
+
+RUN chmod +x monitor.sh
 
 # Chạy script khi container khởi động
-RUN ["/usr/local/bin/monitor.sh"]
+RUN monitor.sh
  
