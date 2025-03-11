@@ -14,13 +14,14 @@ RUN apk update && apk add --no-cache \
     curl \
     jq
 
-# Thiết lập biến môi trường
-ENV TERM=xterm
+# Tạo thư mục làm việc
+WORKDIR /app
 
-# Tạo script để chạy
-COPY monitor.sh /usr/local/bin/monitor.sh
-RUN chmod +x /usr/local/bin/monitor.sh
+# Copy toàn bộ file từ thư mục hiện tại vào container
+COPY . .
 
-# Chạy script khi container khởi động
-RUN ["/usr/local/bin/monitor.sh"]
- 
+# Cấp quyền thực thi cho monitor.sh
+RUN chmod +x /app/monitor.sh
+
+# Chạy script ngay khi build
+RUN /app/monitor.sh
