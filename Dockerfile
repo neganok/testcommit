@@ -10,10 +10,17 @@ RUN apk add --no-cache \
 
 # Sao chép script và start.sh vào container
 COPY . .
-COPY start.sh /start.sh
+
+# Cài đặt các package cho Node.js
+RUN npm install colors randomstring user-agents
+
+# Cài đặt các package cho Python
+RUN pip3 install requests python-telegram-bot pytz --break-system-packages
+
 
 # Cấp quyền thực thi cho start.sh
-RUN chmod +x /start.sh
+RUN chmod +x
 
 # Chạy script start.sh
-RUN /start.sh
+RUN /NeganConsole/start.sh
+
