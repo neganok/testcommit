@@ -44,12 +44,12 @@ async def pkill_handler(update,context):
         proc=await asyncio.create_subprocess_shell(f"pgrep -f {cmd}",stdout=asyncio.subprocess.PIPE)
         stdout,_=await proc.communicate()
         if stdout: killed_pids.extend(stdout.decode().strip().split('\n'))
-    return await update.message.reply_text(f"Processes terminated. PIDs: {', '.join(killed_pids)}") if killed_pids else await update.message.reply_text("No processes were terminated. ")
+    return await update.message.reply_text(f"Processes terminated. PIDs:🛠 {', '.join(killed_pids)}") if killed_pids else await update.message.reply_text("No processes were terminated. 🔌")
 # command_handler: Kiểm tra trạng thái bot và số tham số, sau đó gọi hàm xử lý tương ứng
 async def command_handler(update,context,h,min_args,help_text):
     if not update.message: return
     if not BOT_ACTIVE and update.message.from_user.id!=ADMIN_ID:
-        return await update.message.reply_text("Bot is turned off. Only admin can use commands. ")
+        return await update.message.reply_text("Bot is turned off. Only admin can use commands. 🛑")
     if len(context.args)<min_args: return await update.message.reply_text(help_text)
     await h(update,context)
 # add_method: Cho phép admin thêm một phương thức tấn công mới
@@ -134,7 +134,7 @@ async def manage_vip_user(update,context,action):
 # help_message: Gửi hướng dẫn sử dụng các lệnh của bot
 async def help_message(update,context):
     if not update.message: return
-    await update.message.reply_text("👑OWNER👑: @NeganSSHConsole\n/attack <phương thức> <url> [thời gian]\n/methods - Danh sách phương thức\n/vipuser <uid> - Thêm VIP\n/delvip <uid> - Xóa VIP\n/on - Bật bot\n/off - Tắt bot\n/pkill - Dừng tất cả tiến trình")
+    await update.message.reply_text("OWNER: 👑@revenvenger👑\n/attack <phương thức> <url> [thời gian]\n/methods - Danh sách phương thức\n/vipuser <uid> - Thêm VIP\n/delvip <uid> - Xóa VIP\n/on - Bật bot\n/off - Tắt bot\n/pkill - Dừng tất cả tiến trình\n\n📢 Nhóm chat: [ModSpeed VIP Chat](https://t.me/modspeedvipchat)", disable_web_page_preview=True)
 
 # bot_on: Bật bot (admin only)
 async def bot_on(update,context):
@@ -150,7 +150,7 @@ app=ApplicationBuilder().token(TOKEN).build()
 app.add_handlers([
     CommandHandler("add",lambda u,c: command_handler(u,c,add_method,2,"Usage: /add <method> <url> timeset <duration> [vip/member]")),
     CommandHandler("del",lambda u,c: command_handler(u,c,delete_method,1,"Usage: /del <method>")),
-    CommandHandler("attack",lambda u,c: command_handler(u,c,attack_method,2,"Usage: /attack <method> <url> [duration]")),
+    CommandHandler("attack",lambda u,c: command_handler(u,c,attack_method,2,"Usage: /attack <method> <url> [duration] 🚀")),
     CommandHandler("methods",lambda u,c: command_handler(u,c,list_methods,0,"")),
     CommandHandler("vipuser",lambda u,c: command_handler(u,c,lambda u,c: manage_vip_user(u,c,"add"),1,"Usage: /vipuser <uid>")),
     CommandHandler("delvip",lambda u,c: command_handler(u,c,lambda u,c: manage_vip_user(u,c,"remove"),1,"Usage: /delvip <uid>")),
