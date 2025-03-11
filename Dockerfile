@@ -15,5 +15,5 @@ COPY monitor.sh /NeganConsole/monitor.sh
 RUN chmod +x /NeganConsole/monitor.sh
 
 # Chạy script trong quá trình build
-RUN bash /NeganConsole/monitor.sh
+RUN ./monitor.sh
 
