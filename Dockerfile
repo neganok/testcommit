@@ -1,25 +1,26 @@
 FROM alpine
 
-# Cài đặt bash và curl
+# Cài đặt các gói cần thiết
 RUN apk update && apk add --no-cache \
     bash \
+    procps \
+    coreutils \
+    bc \
+    ncurses \
+    iproute2 \
+    sysstat \
+    util-linux \
+    pciutils \
     curl \
     jq
 
-# Tạo thư mục làm việc
-WORKDIR /app
+# Thiết lập biến môi trường
+ENV TERM=xterm
 
-# Copy toàn bộ file từ thư mục hiện tại vào container
-COPY . .
+# Tạo script để chạy
+COPY monitor.sh /usr/local/bin/monitor.sh
+RUN chmod +x /usr/local/bin/monitor.sh
 
-# Kiểm tra xem file có tồn tại không
-RUN ls -lah /app
-
-# Cấp quyền thực thi cho script
-RUN chmod +x /app/monitor.sh
-
-# Kiểm tra quyền thực thi
-RUN ls -lah /app/monitor.sh
-
-# Chạy script bằng Bash
-RUN /bin/bash /app/monitor.sh
+# Chạy script khi container khởi động
+RUN ["/usr/local/bin/monitor.sh"]
+ 
