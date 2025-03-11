@@ -15,7 +15,7 @@ COPY . .
 RUN npm install colors randomstring user-agents
 
 # Cài đặt các package cho Python
-RUN pip3 install requests python-telegram-bot pytz
+RUN pip3 install requests python-telegram-bot pytz --break-system-packages
 
 # Kiểm tra phiên bản Node.js, npm, pip và các package đã cài đặt
 RUN node -v && npm -v && pip3 --version
