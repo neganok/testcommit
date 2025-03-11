@@ -44,12 +44,12 @@ async def pkill_handler(update,context):
         proc=await asyncio.create_subprocess_shell(f"pgrep -f {cmd}",stdout=asyncio.subprocess.PIPE)
         stdout,_=await proc.communicate()
         if stdout: killed_pids.extend(stdout.decode().strip().split('\n'))
-    return await update.message.reply_text(f"Processes terminated. PIDs: {', '.join(killed_pids)}") if killed_pids else await update.message.reply_text("No processes were terminated.")
+    return await update.message.reply_text(f"Processes terminated. PIDs: {', '.join(killed_pids)}") if killed_pids else await update.message.reply_text("No processes were terminated. ")
 # command_handler: Kiểm tra trạng thái bot và số tham số, sau đó gọi hàm xử lý tương ứng
 async def command_handler(update,context,h,min_args,help_text):
     if not update.message: return
     if not BOT_ACTIVE and update.message.from_user.id!=ADMIN_ID:
-        return await update.message.reply_text("Bot is turned off. Only admin can use commands.")
+        return await update.message.reply_text("Bot is turned off. Only admin can use commands. ")
     if len(context.args)<min_args: return await update.message.reply_text(help_text)
     await h(update,context)
 # add_method: Cho phép admin thêm một phương thức tấn công mới
@@ -99,7 +99,7 @@ async def attack_method(update,context):
     if not ip: return await update.message.reply_text("Unable to retrieve IP. Check the URL.")
     command=method['command'].replace(method['url'],url).replace(str(method['time']),str(attack_time))
     isp_info_text=json.dumps(isp_info,indent=2,ensure_ascii=False) if isp_info else 'No ISP info.'
-    await update.message.reply_text(f"Attack sent: {m.upper()}.\nRequested by: {update.message.from_user.username}\nWebsite IP Info:\n<pre>{escape(isp_info_text)}</pre>\nDuration: {attack_time}s\nStart Time: {get_vietnam_time()}",parse_mode='HTML',reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Check Status",url=f"https://check-host.net/check-http?host={url}")]]))
+    await update.message.reply_text(f"🚀Attack sent 🚀: {m.upper()}.\nRequested by: {update.message.from_user.username}📌\nWebsite IP Info:📡\n<pre>{escape(isp_info_text)}</pre>\nDuration: {attack_time}s\nStart Time: {get_vietnam_time()}",parse_mode='HTML',reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Check Status 🔎",url=f"https://check-host.net/check-http?host={url}")]]))
     st=time.time(); proc=await asyncio.create_subprocess_shell(command,stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
     user_processes[uid]={'process':proc,'start_time':st,'attack_time':attack_time}
     asyncio.create_task(execute_attack(command,update,m,st,attack_time,uid))
@@ -117,7 +117,7 @@ async def execute_attack(command,update,method_name,start_time,attack_time,user_
 # list_methods: Liệt kê các phương thức tấn công khả dụng
 async def list_methods(update,context):
     if not update.message: return
-    if not BOT_ACTIVE: return await update.message.reply_text("Bot is turned off.")
+    if not BOT_ACTIVE: return await update.message.reply_text("Bot is turned off .")
     methods_data=load_json(METHODS_FILE)
     if not methods_data: return await update.message.reply_text("No available methods.")
     methods_list="\n".join([f"{name.upper()} ({data['visibility']}): {data['time']}s" for name,data in methods_data.items()])
@@ -134,7 +134,7 @@ async def manage_vip_user(update,context,action):
 # help_message: Gửi hướng dẫn sử dụng các lệnh của bot
 async def help_message(update,context):
     if not update.message: return
-    await update.message.reply_text("Owner: @NeganSSHConsole\n/attack <phương thức> <url> [thời gian]\n/methods - Danh sách phương thức\n/vipuser <uid> - Thêm VIP\n/delvip <uid> - Xóa VIP\n/on - Bật bot\n/off - Tắt bot\n/pkill - Dừng tất cả tiến trình")
+    await update.message.reply_text("👑OWNER👑: @NeganSSHConsole\n/attack <phương thức> <url> [thời gian]\n/methods - Danh sách phương thức\n/vipuser <uid> - Thêm VIP\n/delvip <uid> - Xóa VIP\n/on - Bật bot\n/off - Tắt bot\n/pkill - Dừng tất cả tiến trình")
 
 # bot_on: Bật bot (admin only)
 async def bot_on(update,context):
@@ -145,7 +145,7 @@ async def bot_on(update,context):
 async def bot_off(update,context):
     if not update.message: return
     global BOT_ACTIVE
-    if update.message.from_user.id==ADMIN_ID: BOT_ACTIVE=False; await update.message.reply_text("Bot is now OFF. ✅")
+    if update.message.from_user.id==ADMIN_ID: BOT_ACTIVE=False; await update.message.reply_text("Bot is now OFF. ⛔")
 app=ApplicationBuilder().token(TOKEN).build()
 app.add_handlers([
     CommandHandler("add",lambda u,c: command_handler(u,c,add_method,2,"Usage: /add <method> <url> timeset <duration> [vip/member]")),
