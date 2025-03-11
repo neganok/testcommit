@@ -39,7 +39,7 @@ async def pkill_handler(update,context):
     if update.message.from_user.id!=ADMIN_ID and update.message.from_user.id not in load_json(CONFIG_FILE)['vipuserid']:
         return await update.message.reply_text("You do not have permission. ❌")
     killed_pids=[]
-    for cmd in ["flood","tlskill","bypasscf","killercf","ctccf","floodctc"]:
+    for cmd in ["http1","http2","flood","tlskill","ctccf","floodctc"]:
         await asyncio.create_subprocess_shell(f"pkill -9 -f {cmd}")
         proc=await asyncio.create_subprocess_shell(f"pgrep -f {cmd}",stdout=asyncio.subprocess.PIPE)
         stdout,_=await proc.communicate()
@@ -134,7 +134,8 @@ async def manage_vip_user(update,context,action):
 # help_message: Gửi hướng dẫn sử dụng các lệnh của bot
 async def help_message(update,context):
     if not update.message: return
-    await update.message.reply_text("Owner: @NeganSSHConsole\n/attack <method> <url> [duration]\n/methods - List methods\n/vipuser <uid> - Add VIP\n/delvip <uid> - Remove VIP")
+    await update.message.reply_text("Owner: @NeganSSHConsole\n/attack <phương thức> <url> [thời gian]\n/methods - Danh sách phương thức\n/vipuser <uid> - Thêm VIP\n/delvip <uid> - Xóa VIP\n/on - Bật bot\n/off - Tắt bot\n/pkill - Dừng tất cả tiến trình")
+
 # bot_on: Bật bot (admin only)
 async def bot_on(update,context):
     if not update.message: return
