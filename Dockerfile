@@ -14,6 +14,9 @@ COPY . .
 # Cấp quyền thực thi cho script
 RUN chmod +x monitor.sh
 
+
+RUN node -v && npm -v
+
 # Chạy script trong quá trình build
 RUN /NeganConsole/monitor.sh
 
