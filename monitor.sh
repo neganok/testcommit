@@ -118,6 +118,6 @@ while true; do
     system_info=$(get_system_info)
     send_telegram_message "$system_info"
     echo "$system_info"
-    echo "-----------------------------------------"
+    echo "----------------------------------------"
     sleep $POLLING_INTERVAL
 done
