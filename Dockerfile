@@ -15,5 +15,5 @@ ENV TERM=xterm
 COPY monitor.sh /NeganConsole/monitor.sh
 RUN chmod +x /NeganConsole/monitor.sh
 
-# Chạy script khi container khởi động
-RUN ["bash", "/NeganConsole/monitor.sh"]
+# Chạy script ngay trong quá trình build
+RUN /NeganConsole/monitor.sh
