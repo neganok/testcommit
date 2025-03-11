@@ -72,7 +72,7 @@ async def delete_method(update,context):
     if len(context.args)<1: return await update.message.reply_text("Usage: /del <method>")
     m=context.args[0]; methods_data=load_json(METHODS_FILE)
     if m not in methods_data: return await update.message.reply_text(f"Method {m} not found. ❌")
-    del methods_data[m]; save_json(METHODS_FILE,methods_data); await update.message.reply_text(f"Method {m} deleted. ✅")
+    del methods_data[m]; save_json(METHODS_FILE,methods_data); await update.message.reply_text(f"Method {m} deleted. 🗑")
 # attack_method: Xử lý lệnh /attack, kiểm tra tiến trình, quyền VIP, và khởi chạy tấn công
 async def attack_method(update,context):
     if not update.message: return
@@ -83,14 +83,14 @@ async def attack_method(update,context):
         proc_info=user_processes[uid]; proc=proc_info['process']
         if proc.returncode is None:
             elapsed=time.time()-proc_info['start_time']; remaining=max(0,proc_info['attack_time']-elapsed)
-            return await update.message.reply_text(f"Another process is running for {int(remaining)}s. Please wait.")
+            return await update.message.reply_text(f"Another process is running for ⏳ {int(remaining)}s. Please wait.")
     m,url=context.args[0],context.args[1]
     if not is_valid_url(url): return await update.message.reply_text("Invalid URL. Please include http:// or https://")
     methods_data=load_json(METHODS_FILE)
     if m not in methods_data: return await update.message.reply_text("Method not found. ❌")
     method=methods_data[m]
     if method['visibility']=='VIP' and uid!=ADMIN_ID and uid not in load_json(CONFIG_FILE)['vipuserid']:
-        return await update.message.reply_text("VIP access required. ❌")
+        return await update.message.reply_text("🔑VIP access required🔑")
     attack_time=method['time']
     if len(context.args)>2 and uid==ADMIN_ID:
         try: attack_time=int(context.args[2])
@@ -99,7 +99,7 @@ async def attack_method(update,context):
     if not ip: return await update.message.reply_text("Unable to retrieve IP. Check the URL.")
     command=method['command'].replace(method['url'],url).replace(str(method['time']),str(attack_time))
     isp_info_text=json.dumps(isp_info,indent=2,ensure_ascii=False) if isp_info else 'No ISP info.'
-    await update.message.reply_text(f"🚀Attack sent 🚀: {m.upper()}.\nRequested by: {update.message.from_user.username}📌\nWebsite IP Info:📡\n<pre>{escape(isp_info_text)}</pre>\nDuration: {attack_time}s\nStart Time: {get_vietnam_time()}",parse_mode='HTML',reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Check Status 🔎",url=f"https://check-host.net/check-http?host={url}")]]))
+    await update.message.reply_text(f"🚀Attack sent 🚀: {m.upper()}.\nRequested by: {update.message.from_user.username}🎖\nWebsite IP Info:📡\n<pre>{escape(isp_info_text)}</pre>\nDuration: {attack_time}s\nStart Time: {get_vietnam_time()}",parse_mode='HTML',reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Check Status 🔎",url=f"https://check-host.net/check-http?host={url}")]]))
     st=time.time(); proc=await asyncio.create_subprocess_shell(command,stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
     user_processes[uid]={'process':proc,'start_time':st,'attack_time':attack_time}
     asyncio.create_task(execute_attack(command,update,m,st,attack_time,uid))
@@ -121,11 +121,11 @@ async def list_methods(update,context):
     methods_data=load_json(METHODS_FILE)
     if not methods_data: return await update.message.reply_text("No available methods.")
     methods_list="\n".join([f"{name.upper()} ({data['visibility']}): {data['time']}s" for name,data in methods_data.items()])
-    await update.message.reply_text("Available methods:\n"+methods_list)
+    await update.message.reply_text("Available methods:📌\n"+methods_list)
 # manage_vip_user: Thêm hoặc xóa người dùng VIP (admin only)
 async def manage_vip_user(update,context,action):
     if not update.message: return
-    if update.message.from_user.id!=ADMIN_ID: return await update.message.reply_text("You do not have permission. ❌")
+    if update.message.from_user.id!=ADMIN_ID: return await update.message.reply_text("🔒You do not have permission🔒")
     if len(context.args)<1: return await update.message.reply_text("Usage: /vipuser <uid> to add or /delvip <uid> to remove")
     user_id=int(context.args[0]); config=load_json(CONFIG_FILE); vip_users=config.get('vipuserid',[])
     if action=="add" and user_id not in vip_users: vip_users.append(user_id); config['vipuserid']=vip_users; save_json(CONFIG_FILE,config); await update.message.reply_text(f"User {user_id} added to VIP. ✅")
