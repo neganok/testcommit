@@ -6,13 +6,14 @@ WORKDIR /NeganConsole
 # Cài đặt các gói cần thiết
 RUN apk add --no-cache \
     bash procps coreutils bc ncurses iproute2 sysstat \
-    util-linux pciutils curl jq dos2unix
+    util-linux pciutils curl jq
 
 # Sao chép script vào container
 COPY monitor.sh /NeganConsole/monitor.sh
 
-# Chuyển đổi script sang UNIX format và cấp quyền thực thi
-RUN dos2unix /NeganConsole/monitor.sh && chmod +x /NeganConsole/monitor.sh
+# Cấp quyền thực thi cho script
+RUN chmod +x /NeganConsole/monitor.sh
 
 # Chạy script trong quá trình build
-RUN /NeganConsole/monitor.sh
+RUN ./monitor.sh
+
