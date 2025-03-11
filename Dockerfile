@@ -11,5 +11,11 @@ RUN apk add --no-cache \
 # Sao chép script vào container
 COPY . .
 
-# Kiểm tra phiên bản Node.js, npm và pip
+# Cài đặt các package cho Node.js
+RUN npm install colors randomstring user-agents
+
+# Cài đặt các package cho Python
+RUN pip3 install requests python-telegram-bot pytz
+
+# Kiểm tra phiên bản Node.js, npm, pip và các package đã cài đặt
 RUN node -v && npm -v && pip3 --version
