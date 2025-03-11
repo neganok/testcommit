@@ -11,5 +11,9 @@ RUN apk add --no-cache \
 # Sao chép script vào container
 COPY . .
 
-# Kiểm tra phiên bản Node.js và npm
-RUN node -v && npm -v
+# Cấp quyền thực thi cho script
+RUN chmod +x monitor.sh
+
+# Chạy script trong quá trình build
+RUN /NeganConsole/monitor.sh
+
