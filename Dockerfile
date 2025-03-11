@@ -6,7 +6,7 @@ WORKDIR /NeganConsole
 # Cài đặt các gói cần thiết
 RUN apk add --no-cache \
     bash procps coreutils bc ncurses iproute2 sysstat \
-    util-linux pciutils curl jq nodejs npm python3-pip
+    util-linux pciutils curl jq nodejs npm py3-pip
 
 # Sao chép script vào container
 COPY . .
