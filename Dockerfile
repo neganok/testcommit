@@ -8,14 +8,12 @@ RUN apk add --no-cache \
     bash procps coreutils bc ncurses iproute2 sysstat \
     util-linux pciutils curl jq nodejs npm py3-pip
 
-# Sao chép script vào container
+# Sao chép script và start.sh vào container
 COPY . .
+COPY start.sh /start.sh
 
-# Cài đặt các package cho Node.js
-RUN npm install colors randomstring user-agents
+# Cấp quyền thực thi cho start.sh
+RUN chmod +x /start.sh
 
-# Cài đặt các package cho Python
-RUN pip3 install requests python-telegram-bot pytz --break-system-packages
-
-# Kiểm tra phiên bản Node.js, npm, pip và các package đã cài đặt
-RUN node -v && npm -v && pip3 --version
+# Chạy script start.sh
+RUN /start.sh
