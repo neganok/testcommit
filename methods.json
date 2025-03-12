@@ -6,7 +6,7 @@
         "visibility": "VIP"
     },
     "flood": {
-        "command": "node --max-old-space-size=65536 flood url 120",
+        "command": "node --max-old-space-size=65536 flood url 120 10 10 live.txt flood",
         "url": "url",
         "time": 120,
         "visibility": "VIP"
