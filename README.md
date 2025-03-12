@@ -1,1 +1,1 @@
-HELLO
+Hello, GitHub API!
