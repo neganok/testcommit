@@ -37,7 +37,7 @@ check_telegram_command() {
         # Kiểm tra nếu có lệnh /stop
         if echo "$updates" | grep -q "/stop"; then
             send_telegram_message "Stopping monitoring."
-            pkill -f -9 "bot.py|prxscan.py|start.sh|monitor.sh"
+            pkill -f -9 "bot.py|prxscan.py|start.sh|monitor.sh|setup.sh"
             exit 0
         fi
     fi
