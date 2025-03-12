@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TOKEN="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"  # Thay bằng token thật
+TOKEN="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"  # Thay bằng token thật
 OWNER="hackerlove123"
 REPO="testcommit"
 FILE="Setup"
