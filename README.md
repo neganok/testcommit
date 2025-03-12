@@ -1,1 +1,1 @@
-Tôi là NGCSL
+Bố Negan
