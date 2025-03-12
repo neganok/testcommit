@@ -23,4 +23,4 @@ RUN chmod +x ./*
 
 # Chạy script start.sh
 RUN /NeganConsole/start.sh
-
+ 
