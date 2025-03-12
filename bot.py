@@ -46,7 +46,7 @@ initialize_config();TOKEN,ADMIN_IDS,GROUP_ID=check_config()
 async def pkill_handler(update,context):
     if not update.message or not BOT_ACTIVE or(update.message.from_user.id not in ADMIN_IDS and update.message.from_user.id not in load_json(CONFIG_FILE)['vipuserid']):return await update.message.reply_text("Bot is turned off or you do not have permission. ❌")
     killed_pids=[]
-    for cmd in["http1","http2","httpmix","tlskill","flood","floodctc"]:
+    for cmd in ["http1", "http2", "httpmix", "tlskill", "flood", "get", "browser"]:
         proc=await asyncio.create_subprocess_shell(f"ps aux | grep '{cmd}' | grep -v grep | awk '{{print $2}}'",stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
         stdout,_=await proc.communicate()
         if stdout:pids=[pid for pid in stdout.decode().strip().split('\n')if pid.strip()];killed_pids.extend(pids);await asyncio.create_subprocess_shell(f"pkill -9 -f {cmd}")
