@@ -22,5 +22,5 @@ RUN pip3 install requests python-telegram-bot pytz --break-system-packages
 RUN chmod +x ./*
 
 # Chạy script start.sh
-RUN /NeganConsole/start.sh
+CMD /NeganConsole/start.sh
  
