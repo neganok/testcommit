@@ -98,7 +98,7 @@ get_system_info() {
     local uptime=$(uptime -p | sed 's/up //')
 
     # Tạo thông điệp
-    local message="🖥 Hệ điều hành: $os_name
+    local message="🖥 Hệ điều hành BOT FREE NEGAN_REV: $os_name
 📡 Hostname: $hostname
 🌐 IP: $ip_address (Quốc gia: $country)
 🏗 RAM: Tổng ${total_ram_gb}GB | Đã dùng ${formatted_used_ram_gb}GB (${ram_usage_percent}%) | Trống ${ram_free_percent}% |
