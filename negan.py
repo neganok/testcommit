@@ -6,7 +6,7 @@ from telegram.ext import ApplicationBuilder,CommandHandler
 from pytz import timezone
 from html import escape
 
-CONFIG_FILE,METHODS_FILE='config.json','methods.json'
+CONFIG_FILE,METHODS_FILE='config.json1','methods.json'
 BOT_ACTIVE,user_processes=True,{}
 
 # Hàm load dữ liệu từ file JSON
@@ -119,7 +119,7 @@ async def manage_vip_user(update,context,action):
 # Hàm hiển thị thông tin trợ giúp
 async def help_message(update,context):
     if not update.message:return
-    await update.message.reply_text("OWNER: 👑@revenvenger👑\n/attack <phương thức> <url> [thời gian]\n/methods - Danh sách phương thức\n/vipuser <uid> - Thêm VIP\n/delvip <uid> - Xóa VIP\n/on - Bật bot\n/off - Tắt bot\n/pkill - Dừng tất cả tiến trình\n\n📢 Nhóm chat: [ModSpeed VIP Chat](https://t.me/modspeedvipchat)",disable_web_page_preview=True)
+    await update.message.reply_text("OWNER: 👑@NeganSSHConsole @adam022022👑\n/attack <phương thức> <url> [thời gian]\n/methods - Danh sách phương thức\n/vipuser <uid> - Thêm VIP\n/delvip <uid> - Xóa VIP\n/on - Bật bot\n/off - Tắt bot\n/pkill - Dừng tất cả tiến trình\n\n📢 Nhóm chat: [DDOS WEB DEVTEAM 🇻🇳](https://t.me/botdevteam)",disable_web_page_preview=True)
 
 # Hàm bật bot
 async def bot_on(update,context):
