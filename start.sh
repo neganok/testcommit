@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Chạy bot Python
-python3 bot.py &
-
+python3 rev.py &
+python3 negan.py &
 # Chạy proxy scanner
 python3 prxscan.py -l list.txt &    
 
