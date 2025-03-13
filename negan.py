@@ -6,7 +6,7 @@ from telegram.ext import ApplicationBuilder,CommandHandler
 from pytz import timezone
 from html import escape
 
-CONFIG_FILE,METHODS_FILE='config.json1','methods.json'
+CONFIG_FILE,METHODS_FILE='config.json1','methods1.json'
 BOT_ACTIVE,user_processes=True,{}
 
 # Hàm load dữ liệu từ file JSON
