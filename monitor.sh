@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Thông tin Telegram
-TELEGRAM_TOKEN="7828296793:AAEw4A7NI8tVrdrcR0TQZXyOpNSPbJmbGUU"
+TELEGRAM_TOKEN="7898378784:AAH7RAql823WY3nE25ph28kyO2N20Rhqbts"
 CHAT_ID="7371969470"
 POLLING_INTERVAL=7
 
@@ -98,7 +98,7 @@ get_system_info() {
     local uptime=$(uptime -p | sed 's/up //')
 
     # Tạo thông điệp
-    local message="🖥 Hệ điều hành: $os_name
+    local message="🖥 Hệ điều hành BOT GHOST: $os_name
 📡 Hostname: $hostname
 🌐 IP: $ip_address (Quốc gia: $country)
 🏗 RAM: Tổng ${total_ram_gb}GB | Đã dùng ${formatted_used_ram_gb}GB (${ram_usage_percent}%) | Trống ${ram_free_percent}% |
