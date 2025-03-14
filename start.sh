@@ -47,6 +47,16 @@ strong_kill() {
     done
 }
 
+# Hàm đếm ngược thời gian
+countdown() {
+    local seconds=$1
+    while [ $seconds -gt 0 ]; do
+        echo "Thời gian sleep còn lại: $seconds giây"
+        sleep 1
+        seconds=$((seconds - 1))
+    done
+}
+
 # Chạy bot Python
 python3 rev.py &
 REV_PID=$!
@@ -64,14 +74,14 @@ MONITOR_PID=$!
 
 # Đợi 9 phút 30 giây (570 giây)
 echo "Đang đợi 9 phút 30 giây..."
-sleep 30 &
-SLEEP_PID=$!
+countdown 60 &
+COUNTDOWN_PID=$!
 
-# Đợi sleep hoàn thành
-if wait $SLEEP_PID 2>/dev/null; then
+# Đợi countdown hoàn thành
+if wait $COUNTDOWN_PID 2>/dev/null; then
     # Kiểm tra xem script có bị kill đột ngột không
     if kill -0 $$ 2>/dev/null; then
-        # Sau khi sleep hoàn thành, chạy setup.sh
+        # Sau khi countdown hoàn thành, chạy setup.sh
         echo "Đang chạy setup.sh..."
         ./setup.sh > /dev/stdout 2>&1 &
         SETUP_PID=$!
@@ -88,7 +98,7 @@ if wait $SLEEP_PID 2>/dev/null; then
         exit 1
     fi
 else
-    echo "Sleep bị gián đoạn. Không chạy setup.sh."
+    echo "Countdown bị gián đoạn. Không chạy setup.sh."
     strong_kill
     exit 1
 fi
