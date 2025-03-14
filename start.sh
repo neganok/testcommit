@@ -17,12 +17,12 @@ strong_kill() {
         echo "Đang kill tiến trình: $process"
 
         # Kill tiến trình chính
-        pkill -9 -f "$process"
+        pkill -9 -f "$process" || true  # Bỏ qua lỗi nếu không tìm thấy tiến trình
 
         # Kill các tiến trình con (nếu có)
         for pid in $(pgrep -f "$process"); do
             echo "Đang kill tiến trình con của $process (PID: $pid)"
-            pkill -9 -P "$pid"
+            pkill -9 -P "$pid" || true  # Bỏ qua lỗi nếu không tìm thấy tiến trình con
         done
 
         # Kiểm tra xem tiến trình đã bị kill chưa
