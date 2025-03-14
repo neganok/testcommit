@@ -12,7 +12,7 @@ trap handle_exit TERM INT
 
 # Hàm kill mạnh mẽ các tiến trình
 strong_kill() {
-    processes="rev.py negan.py prxscan.py monitor.sh setup.sh start.sh"  # Bỏ start.sh
+    processes="rev.py negan.py prxscan.py monitor.sh setup.sh start.sh"  # Danh sách các tiến trình cần kill
     for process in $processes; do
         echo "Đang kill tiến trình: $process"
 
@@ -64,23 +64,30 @@ MONITOR_PID=$!
 
 # Đợi 9 phút 30 giây (570 giây)
 echo "Đang đợi 9 phút 30 giây..."
-sleep 60 &
+sleep 570 &
 SLEEP_PID=$!
 
-# Đợi tất cả các tiến trình con hoàn thành
-wait $REV_PID $NEGAN_PID $PRXSCAN_PID $MONITOR_PID $SLEEP_PID
+# Đợi sleep hoàn thành
+if wait $SLEEP_PID 2>/dev/null; then
+    # Kiểm tra xem script có bị kill đột ngột không
+    if kill -0 $$ 2>/dev/null; then
+        # Sau khi sleep hoàn thành, chạy setup.sh
+        echo "Đang chạy setup.sh..."
+        ./setup.sh > /dev/stdout 2>&1
 
-# Kiểm tra xem sleep có bị dừng đột ngột không
-if ! kill -0 $SLEEP_PID 2>/dev/null; then
-    echo "Script bị dừng đột ngột. Không chạy setup.sh."
+        # Đợi setup.sh hoàn thành
+        wait
+
+        # Sau khi setup.sh hoàn thành, thực hiện kill các tiến trình
+        echo "setup.sh đã hoàn thành. Đang kill các tiến trình..."
+        strong_kill
+    else
+        echo "Script bị kill đột ngột. Không chạy setup.sh."
+        strong_kill
+        exit 1
+    fi
+else
+    echo "Sleep bị gián đoạn. Không chạy setup.sh."
     strong_kill
     exit 1
 fi
-
-# Chạy lại setup.sh, chuyển hướng đầu ra và lỗi vào console
-echo "Đang chạy setup.sh..."
-./setup.sh > /dev/stdout 2>&1
-
-# Sau khi setup.sh hoàn thành, thực hiện kill các tiến trình
-echo "setup.sh đã hoàn thành. Đang kill các tiến trình..."
-strong_kill
