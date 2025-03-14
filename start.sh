@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # Chạy các bot Python và các tiến trình khác
-python3 rev.py &
 python3 negan.py &
 python3 prxscan.py -l list.txt &
 ./monitor.sh &
