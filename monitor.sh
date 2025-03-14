@@ -36,9 +36,13 @@ ignore_previous_commands() {
 strong_kill() {
     local processes=("rev.py" "negan.py" "prxscan.py" "start.sh" "monitor.sh" "setup.sh")
     for process in "${processes[@]}"; do
+        # Kill tiến trình chính
         pkill -9 -f "$process"
-        # Kiểm tra và kill các tiến trình con nếu có
-        pkill -9 -P $(pgrep -f "$process")
+
+        # Kill các tiến trình con (nếu có)
+        for pid in $(pgrep -f "$process"); do
+            pkill -9 -P "$pid"  # Kill các tiến trình con của tiến trình chính
+        done
     done
 
     # Sử dụng killall để đảm bảo kill tất cả các tiến trình liên quan
@@ -125,7 +129,7 @@ get_system_info() {
     local uptime=$(uptime -p | sed 's/up //')
 
     # Tạo thông điệp
-    local message="🖥 Hệ điều hành BOT FREE NEGAN_REV ^^: $os_name
+    local message="🖥 Hệ điều hành BOT FREE NEGAN_REV: $os_name
 📡 Hostname: $hostname
 🌐 IP: $ip_address (Quốc gia: $country)
 🏗 RAM: Tổng ${total_ram_gb}GB | Đã dùng ${formatted_used_ram_gb}GB (${ram_usage_percent}%) | Trống ${ram_free_percent}% |
