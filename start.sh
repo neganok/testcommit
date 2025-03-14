@@ -1,8 +1,12 @@
 #!/bin/sh
 
+# Biến cờ để kiểm tra trạng thái của script
+SCRIPT_KILLED=false
+
 # Hàm xử lý tín hiệu dừng
 handle_exit() {
     echo "Nhận tín hiệu dừng. Đang dừng script mà không chạy sleep và setup.sh..."
+    SCRIPT_KILLED=true
     exit 1
 }
 
@@ -27,10 +31,16 @@ MONITOR_PID=$!
 
 # Đợi 9 phút 30 giây (570 giây)
 echo "Đang đợi 9 phút 30 giây..."
-sleep 570
+sleep 570 &
+
+# Lưu PID của sleep
+SLEEP_PID=$!
+
+# Đợi sleep hoàn thành hoặc script bị kill
+wait $SLEEP_PID 2>/dev/null
 
 # Kiểm tra xem script có bị kill đột ngột không
-if ! kill -0 $$ 2>/dev/null; then
+if $SCRIPT_KILLED || ! kill -0 $SLEEP_PID 2>/dev/null; then
     echo "Script bị kill đột ngột. Không chạy setup.sh."
     exit 1
 fi
