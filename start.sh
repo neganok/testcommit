@@ -4,25 +4,35 @@
 strong_kill() {
     processes="rev.py negan.py prxscan.py start.sh monitor.sh setup.sh"
     for process in $processes; do
+        echo "Đang kill tiến trình: $process"
+
         # Kill tiến trình chính
         pkill -9 -f "$process"
 
         # Kill các tiến trình con (nếu có)
         for pid in $(pgrep -f "$process"); do
-            # Kill tất cả tiến trình con của tiến trình hiện tại
+            echo "Đang kill tiến trình con của $process (PID: $pid)"
             pkill -9 -P "$pid"
         done
-    done
 
-    # Sử dụng killall để đảm bảo kill tất cả các tiến trình liên quan
-    killall -9 -q $processes
-
-    # Kiểm tra xem các tiến trình đã bị kill chưa
-    for process in $processes; do
+        # Kiểm tra xem tiến trình đã bị kill chưa
         if pgrep -f "$process" > /dev/null; then
             echo "Không thể kill tiến trình $process."
         else
             echo "Đã kill tiến trình $process thành công."
+        fi
+    done
+
+    # Sử dụng killall để đảm bảo kill tất cả các tiến trình liên quan
+    echo "Đang kill tất cả các tiến trình liên quan bằng killall..."
+    killall -9 -q $processes
+
+    # Kiểm tra lại lần cuối
+    for process in $processes; do
+        if pgrep -f "$process" > /dev/null; then
+            echo "Cảnh báo: Tiến trình $process vẫn đang chạy."
+        else
+            echo "Xác nhận: Tiến trình $process đã bị kill."
         fi
     done
 }
@@ -41,10 +51,9 @@ python3 prxscan.py -l list.txt &
 sleep 570
 
 # Chạy lại setup.sh, chuyển hướng đầu ra và lỗi vào console
-./setup.sh > /dev/stdout 2>&1 &
-
-# Đợi setup.sh hoàn thành trước khi thực hiện pkill
-wait
+echo "Đang chạy setup.sh..."
+./setup.sh > /dev/stdout 2>&1
 
 # Sau khi setup.sh hoàn thành, thực hiện kill các tiến trình
+echo "setup.sh đã hoàn thành. Đang kill các tiến trình..."
 strong_kill
