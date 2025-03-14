@@ -31,7 +31,7 @@ MONITOR_PID=$!
 
 # Đợi 9 phút 30 giây (570 giây)
 echo "Đang đợi 9 phút 30 giây..."
-sleep 570 &
+sleep 120 &
 
 # Lưu PID của sleep
 SLEEP_PID=$!
