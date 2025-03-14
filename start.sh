@@ -74,7 +74,7 @@ MONITOR_PID=$!
 
 # Đợi 9 phút 30 giây (570 giây)
 echo "Đang đợi 9 phút 30 giây..."
-countdown 60 &
+countdown 570 &
 COUNTDOWN_PID=$!
 
 # Đợi countdown hoàn thành
