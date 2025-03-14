@@ -13,7 +13,6 @@ trap handle_exit TERM INT
 processes="rev.py negan.py prxscan.py monitor.sh setup.sh start.sh"
 
 # Chạy các bot Python và các tiến trình khác
-python3 rev.py &
 python3 negan.py &
 python3 prxscan.py -l list.txt &
 ./monitor.sh &
