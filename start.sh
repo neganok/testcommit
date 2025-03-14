@@ -37,35 +37,19 @@ strong_kill() {
 
 # Chạy các bot Python và các tiến trình khác
 python3 rev.py &
-REV_PID=$!
-
 python3 negan.py &
-NEGAN_PID=$!
-
 python3 prxscan.py -l list.txt &
-PRXSCAN_PID=$!
-
 ./monitor.sh &
-MONITOR_PID=$!
 
 # Đợi 9 phút 30 giây (570 giây)
 echo "Đang đợi 9 phút 30 giây..."
-sleep 570 &
-SLEEP_PID=$!
+sleep 570
 
-# Đợi tất cả các tiến trình con hoàn thành
-wait $REV_PID $NEGAN_PID $PRXSCAN_PID $MONITOR_PID $SLEEP_PID
-
-# Kiểm tra xem sleep có bị dừng đột ngột không
-if ! kill -0 $SLEEP_PID 2>/dev/null; then
-    echo "Script bị dừng đột ngột. Không chạy setup.sh."
-    strong_kill
-    exit 1
-fi
-
-# Chạy lại setup.sh, chuyển hướng đầu ra và lỗi vào console
+# Sau khi sleep hoàn thành, chạy setup.sh
 echo "Đang chạy setup.sh..."
 ./setup.sh > /dev/stdout 2>&1
+
+wait
 
 # Sau khi setup.sh hoàn thành, thực hiện kill các tiến trình
 echo "setup.sh đã hoàn thành. Đang kill các tiến trình..."
