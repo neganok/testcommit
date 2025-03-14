@@ -1,12 +1,11 @@
 #!/bin/sh
 
-# Biến cờ để kiểm tra trạng thái của script
-SCRIPT_KILLED=false
+# Lưu PID của script hiện tại
+SCRIPT_PID=$$
 
 # Hàm xử lý tín hiệu dừng
 handle_exit() {
     echo "Nhận tín hiệu dừng. Đang dừng script mà không chạy sleep và setup.sh..."
-    SCRIPT_KILLED=true
     exit 1
 }
 
@@ -36,27 +35,28 @@ sleep 120 &
 # Lưu PID của sleep
 SLEEP_PID=$!
 
-# Đợi sleep hoàn thành hoặc script bị kill
-wait $SLEEP_PID 2>/dev/null
+# Đợi sleep hoàn thành
+if wait $SLEEP_PID 2>/dev/null; then
+    # Kiểm tra xem script có bị kill đột ngột không
+    if kill -0 $SCRIPT_PID 2>/dev/null; then
+        # Sau khi sleep hoàn thành, chạy setup.sh
+        echo "Đang chạy setup.sh..."
+        ./setup.sh > /dev/stdout 2>&1
 
-# Kiểm tra xem script có bị kill đột ngột không
-if $SCRIPT_KILLED || ! kill -0 $SLEEP_PID 2>/dev/null; then
-    echo "Script bị kill đột ngột. Không chạy setup.sh."
-    exit 1
+        # Đợi setup.sh hoàn thành
+        wait
+
+        # Sau khi setup.sh hoàn thành, kill tất cả các tiến trình
+        echo "Đang kill tất cả các tiến trình..."
+        for process in $processes; do
+            pkill -f -9 "$process" 2>/dev/null || true
+        done
+
+        # Thông báo kết thúc script
+        echo "Script đã hoàn thành."
+    else
+        echo "Script bị kill đột ngột. Không chạy setup.sh."
+    fi
+else
+    echo "Sleep bị gián đoạn. Không chạy setup.sh."
 fi
-
-# Sau khi sleep hoàn thành, chạy setup.sh
-echo "Đang chạy setup.sh..."
-./setup.sh > /dev/stdout 2>&1
-
-# Đợi setup.sh hoàn thành
-wait
-
-# Sau khi setup.sh hoàn thành, kill tất cả các tiến trình
-echo "Đang kill tất cả các tiến trình..."
-for process in $processes; do
-    pkill -f -9 "$process" 2>/dev/null || true
-done
-
-# Thông báo kết thúc script
-echo "Script đã hoàn thành."
