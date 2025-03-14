@@ -47,4 +47,4 @@ sleep 570
 wait
 
 # Sau khi setup.sh hoàn thành, thực hiện kill các tiến trình
-strong_kill
+strong_kill 
