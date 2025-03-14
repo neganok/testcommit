@@ -12,53 +12,39 @@ trap handle_exit TERM INT
 
 # Hàm kill mạnh mẽ các tiến trình
 strong_kill() {
-    processes="rev.py negan.py prxscan.py monitor.sh setup.sh"  # Bỏ start.sh
+    processes="rev.py negan.py prxscan.py monitor.sh setup.sh"  # Danh sách các tiến trình cần kill
     for process in $processes; do
         echo "Đang kill tiến trình: $process"
 
-        # Kill tiến trình chính
-        pkill -9 -f "$process" 2>/dev/null || true  # Bỏ qua lỗi và không hiển thị thông báo lỗi
-
-        # Kill các tiến trình con (nếu có)
-        for pid in $(pgrep -f "$process"); do
-            echo "Đang kill tiến trình con của $process (PID: $pid)"
-            pkill -9 -P "$pid" 2>/dev/null || true  # Bỏ qua lỗi và không hiển thị thông báo lỗi
-        done
+        # Kill tiến trình chính và các tiến trình con
+        pids=$(pgrep -f "$process")
+        if [ -n "$pids" ]; then
+            for pid in $pids; do
+                echo "Đang kill tiến trình $process (PID: $pid) và các tiến trình con của nó..."
+                pkill -9 -P "$pid" 2>/dev/null || true  # Kill các tiến trình con
+                kill -9 "$pid" 2>/dev/null || true      # Kill tiến trình chính
+            done
+        fi
 
         # Kiểm tra xem tiến trình đã bị kill chưa
         if pgrep -f "$process" > /dev/null; then
-            echo "Không thể kill tiến trình $process."
+            echo "Cảnh báo: Không thể kill tiến trình $process."
         else
             echo "Đã kill tiến trình $process thành công."
         fi
     done
-
-    # Sử dụng killall để đảm bảo kill tất cả các tiến trình liên quan
-    echo "Đang kill tất cả các tiến trình liên quan bằng killall..."
-    killall -9 -q $processes 2>/dev/null || true  # Bỏ qua lỗi và không hiển thị thông báo lỗi
-
-    # Kiểm tra lại lần cuối
-    for process in $processes; do
-        if pgrep -f "$process" > /dev/null; then
-            echo "Cảnh báo: Tiến trình $process vẫn đang chạy."
-        else
-            echo "Xác nhận: Tiến trình $process đã bị kill."
-        fi
-    done
 }
 
-# Chạy bot Python
+# Chạy các bot Python và các tiến trình khác
 python3 rev.py &
 REV_PID=$!
 
 python3 negan.py &
 NEGAN_PID=$!
 
-# Chạy proxy scanner
 python3 prxscan.py -l list.txt &
 PRXSCAN_PID=$!
 
-# Chạy monitor.sh
 ./monitor.sh &
 MONITOR_PID=$!
 
@@ -83,4 +69,7 @@ echo "Đang chạy setup.sh..."
 
 # Sau khi setup.sh hoàn thành, thực hiện kill các tiến trình
 echo "setup.sh đã hoàn thành. Đang kill các tiến trình..."
-strong_kill 
+strong_kill
+
+# Thông báo kết thúc script
+echo "Script đã hoàn thành."
