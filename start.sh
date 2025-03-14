@@ -73,10 +73,11 @@ if wait $SLEEP_PID 2>/dev/null; then
     if kill -0 $$ 2>/dev/null; then
         # Sau khi sleep hoàn thành, chạy setup.sh
         echo "Đang chạy setup.sh..."
-        ./setup.sh > /dev/stdout 2>&1
+        ./setup.sh > /dev/stdout 2>&1 &
+        SETUP_PID=$!
 
         # Đợi setup.sh hoàn thành
-        wait
+        wait $SETUP_PID
 
         # Sau khi setup.sh hoàn thành, thực hiện kill các tiến trình
         echo "setup.sh đã hoàn thành. Đang kill các tiến trình..."
