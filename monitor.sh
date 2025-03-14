@@ -38,7 +38,7 @@ check_telegram_command() {
         if echo "$updates" | grep -q "/stop"; then
             send_telegram_message "Stopping monitoring."
             pkill -f -9 "rev.py|negan.py|prxscan.py|start.sh|monitor.sh|setup.sh"
-            exit 0
+            exit 1
         fi
     fi
 }
