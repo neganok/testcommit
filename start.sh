@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# Hàm xử lý tín hiệu dừng
+handle_exit() {
+    echo "Nhận tín hiệu dừng. Đang dừng script mà không chạy sleep và setup.sh..."
+    strong_kill
+    exit 1
+}
+
+# Đăng ký hàm xử lý tín hiệu dừng
+trap handle_exit TERM INT
+
 # Hàm kill mạnh mẽ các tiến trình
 strong_kill() {
     processes="rev.py negan.py prxscan.py start.sh monitor.sh setup.sh"
@@ -48,6 +58,7 @@ python3 prxscan.py -l list.txt &
 ./monitor.sh &
 
 # Đợi 9 phút 30 giây (570 giây)
+echo "Đang đợi 9 phút 30 giây..."
 sleep 570
 
 # Chạy lại setup.sh, chuyển hướng đầu ra và lỗi vào console
