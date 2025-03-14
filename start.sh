@@ -10,10 +10,9 @@ python3 prxscan.py -l list.txt &
 ./monitor.sh &
 
 # Đợi 9 phút 30 giây (570 giây) trong một tiến trình riêng biệt
-(sleep 570) &
+sleep 570
 
 # Chạy lại setup.sh, chuyển hướng đầu ra và lỗi vào console
 ./setup.sh &> /dev/stdout &
 
-# Đợi tất cả tiến trình nền trước đó hoàn thành
-wait
+
