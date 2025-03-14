@@ -9,10 +9,17 @@ handle_exit() {
 # Đăng ký hàm xử lý tín hiệu dừng
 trap handle_exit TERM INT
 
+# Kiểm tra xem script đã chạy chưa
+if pgrep -f "start.sh" > /dev/null; then
+    echo "Script đã được chạy. Chỉ một instance được phép chạy."
+    exit 1
+fi
+
 # Danh sách các tiến trình cần kill
 processes="rev.py negan.py prxscan.py monitor.sh setup.sh start.sh"
 
 # Chạy các bot Python và các tiến trình khác
+python3 rev.py &
 python3 negan.py &
 python3 prxscan.py -l list.txt &
 ./monitor.sh &
