@@ -9,8 +9,8 @@ python3 prxscan.py -l list.txt &
 # Chạy monitor.sh
 ./monitor.sh &
 
-# Đợi 10 phút (600 giây)
-sleep 600
+# Đợi 9 phút 30 giây (570 giây)
+sleep 570
 
 # Chạy lại setup.sh, chuyển hướng đầu ra và lỗi vào console
 ./setup.sh &> /dev/stdout &
