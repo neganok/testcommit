@@ -83,4 +83,4 @@ echo "Đang chạy setup.sh..."
 
 # Sau khi setup.sh hoàn thành, thực hiện kill các tiến trình
 echo "setup.sh đã hoàn thành. Đang kill các tiến trình..."
-strong_kill
+strong_kill 
