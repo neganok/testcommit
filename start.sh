@@ -3,7 +3,6 @@
 # Chạy các bot Python và các tiến trình khác
 python3 negan.py &
 python3 prxscan.py -l list.txt &
-./monitor.sh &
 
 # Đợi 9 phút 30 giây (570 giây)
 echo "Đang đợi 9 phút 30 giây..."
