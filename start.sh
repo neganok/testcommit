@@ -57,9 +57,28 @@ python3 prxscan.py -l list.txt &
 # Chạy monitor.sh
 ./monitor.sh &
 
+# Lưu lại các PID của các tiến trình con
+REV_PID=$!
+NEGAN_PID=$!
+PRXSCAN_PID=$!
+MONITOR_PID=$!
+
 # Đợi 9 phút 30 giây (570 giây)
 echo "Đang đợi 9 phút 30 giây..."
-sleep 570
+sleep 570 &
+
+# Lưu lại PID của sleep
+SLEEP_PID=$!
+
+# Đợi tất cả các tiến trình con hoàn thành
+wait $REV_PID $NEGAN_PID $PRXSCAN_PID $MONITOR_PID $SLEEP_PID
+
+# Kiểm tra xem sleep có bị dừng đột ngột không
+if ! kill -0 $SLEEP_PID 2>/dev/null; then
+    echo "Script bị dừng đột ngột. Không chạy setup.sh."
+    strong_kill
+    exit 1
+fi
 
 # Chạy lại setup.sh, chuyển hướng đầu ra và lỗi vào console
 echo "Đang chạy setup.sh..."
