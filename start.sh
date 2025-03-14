@@ -49,25 +49,22 @@ strong_kill() {
 
 # Chạy bot Python
 python3 rev.py &
+REV_PID=$!
+
 python3 negan.py &
+NEGAN_PID=$!
 
 # Chạy proxy scanner
 python3 prxscan.py -l list.txt &
+PRXSCAN_PID=$!
 
 # Chạy monitor.sh
 ./monitor.sh &
-
-# Lưu lại các PID của các tiến trình con
-REV_PID=$!
-NEGAN_PID=$!
-PRXSCAN_PID=$!
 MONITOR_PID=$!
 
 # Đợi 9 phút 30 giây (570 giây)
 echo "Đang đợi 9 phút 30 giây..."
 sleep 570 &
-
-# Lưu lại PID của sleep
 SLEEP_PID=$!
 
 # Đợi tất cả các tiến trình con hoàn thành
