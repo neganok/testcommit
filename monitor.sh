@@ -41,7 +41,8 @@ strong_kill() {
 
         # Kill các tiến trình con (nếu có)
         for pid in $(pgrep -f "$process"); do
-            pkill -9 -P "$pid"  # Kill các tiến trình con của tiến trình chính
+            # Kill tất cả tiến trình con của tiến trình hiện tại
+            pkill -9 -P "$pid"
         done
     done
 
