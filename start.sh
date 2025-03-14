@@ -12,7 +12,7 @@ trap handle_exit TERM INT
 
 # Hàm kill mạnh mẽ các tiến trình
 strong_kill() {
-    processes="rev.py negan.py prxscan.py start.sh monitor.sh setup.sh"
+    processes="rev.py negan.py prxscan.py monitor.sh setup.sh"  # Bỏ start.sh
     for process in $processes; do
         echo "Đang kill tiến trình: $process"
 
@@ -35,7 +35,7 @@ strong_kill() {
 
     # Sử dụng killall để đảm bảo kill tất cả các tiến trình liên quan
     echo "Đang kill tất cả các tiến trình liên quan bằng killall..."
-    killall -9 -q $processes
+    killall -9 -q $processes || true  # Bỏ qua lỗi nếu không có tiến trình nào để kill
 
     # Kiểm tra lại lần cuối
     for process in $processes; do
