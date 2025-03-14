@@ -17,12 +17,12 @@ strong_kill() {
         echo "Đang kill tiến trình: $process"
 
         # Kill tiến trình chính
-        pkill -9 -f "$process" || true  # Bỏ qua lỗi nếu không tìm thấy tiến trình
+        pkill -9 -f "$process" 2>/dev/null || true  # Bỏ qua lỗi và không hiển thị thông báo lỗi
 
         # Kill các tiến trình con (nếu có)
         for pid in $(pgrep -f "$process"); do
             echo "Đang kill tiến trình con của $process (PID: $pid)"
-            pkill -9 -P "$pid" || true  # Bỏ qua lỗi nếu không tìm thấy tiến trình con
+            pkill -9 -P "$pid" 2>/dev/null || true  # Bỏ qua lỗi và không hiển thị thông báo lỗi
         done
 
         # Kiểm tra xem tiến trình đã bị kill chưa
@@ -35,7 +35,7 @@ strong_kill() {
 
     # Sử dụng killall để đảm bảo kill tất cả các tiến trình liên quan
     echo "Đang kill tất cả các tiến trình liên quan bằng killall..."
-    killall -9 -q $processes || true  # Bỏ qua lỗi nếu không có tiến trình nào để kill
+    killall -9 -q $processes 2>/dev/null || true  # Bỏ qua lỗi và không hiển thị thông báo lỗi
 
     # Kiểm tra lại lần cuối
     for process in $processes; do
