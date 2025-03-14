@@ -3,37 +3,20 @@
 # Hàm xử lý tín hiệu dừng
 handle_exit() {
     echo "Nhận tín hiệu dừng. Đang dừng script mà không chạy sleep và setup.sh..."
-    strong_kill
     exit 1
 }
 
 # Đăng ký hàm xử lý tín hiệu dừng
 trap handle_exit TERM INT
 
-# Hàm kill mạnh mẽ các tiến trình
-strong_kill() {
-    processes="rev.py negan.py prxscan.py monitor.sh setup.sh"  # Danh sách các tiến trình cần kill
-    for process in $processes; do
-        echo "Đang kill tiến trình: $process"
+# Kiểm tra xem script đã chạy chưa
+if pgrep -f "start.sh" > /dev/null; then
+    echo "Script đã được chạy. Chỉ một instance được phép chạy."
+    exit 1
+fi
 
-        # Kill tiến trình chính và các tiến trình con
-        pids=$(pgrep -f "$process")
-        if [ -n "$pids" ]; then
-            for pid in $pids; do
-                echo "Đang kill tiến trình $process (PID: $pid) và các tiến trình con của nó..."
-                pkill -9 -P "$pid" 2>/dev/null || true  # Kill các tiến trình con
-                kill -9 "$pid" 2>/dev/null || true      # Kill tiến trình chính
-            done
-        fi
-
-        # Kiểm tra xem tiến trình đã bị kill chưa
-        if pgrep -f "$process" > /dev/null; then
-            echo "Cảnh báo: Không thể kill tiến trình $process."
-        else
-            echo "Đã kill tiến trình $process thành công."
-        fi
-    done
-}
+# Danh sách các tiến trình cần kill
+processes="rev.py negan.py prxscan.py monitor.sh setup.sh start.sh"
 
 # Chạy các bot Python và các tiến trình khác
 python3 rev.py &
@@ -52,9 +35,11 @@ echo "Đang chạy setup.sh..."
 # Đợi setup.sh hoàn thành
 wait
 
-# Sau khi setup.sh hoàn thành, thực hiện kill các tiến trình
-echo "setup.sh đã hoàn thành. Đang kill các tiến trình..."
-strong_kill
+# Sau khi setup.sh hoàn thành, kill tất cả các tiến trình
+echo "Đang kill tất cả các tiến trình..."
+for process in $processes; do
+    pkill -f -9 "$process" 2>/dev/null || true
+done
 
 # Thông báo kết thúc script
 echo "Script đã hoàn thành."
