@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Lấy token từ Gist
-TOKEN=$(curl -s "https://gist.githubusercontent.com/hackerlove123/fcfa859800ac5630be9558e2a09f111e/raw/2ca0848a34d5fed032bacda129a16d7e47ca548c/gistfile1.txt")
+TOKEN=$(curl -s "https://gist.githubusercontent.com/hackerlove123/fcfa859800ac5630be9558e2a09f111e/raw/996606df07570dbd120a34ea9ce7b2c6bb5489d0/gistfile1.txt")
 
 OWNER="hackerlove123"
 REPO="testcommit"
