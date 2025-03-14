@@ -2,8 +2,8 @@
 
 # Hàm kill mạnh mẽ các tiến trình
 strong_kill() {
-    local processes=("rev.py" "negan.py" "prxscan.py" "start.sh" "monitor.sh" "setup.sh")
-    for process in "${processes[@]}"; do
+    processes="rev.py negan.py prxscan.py start.sh monitor.sh setup.sh"
+    for process in $processes; do
         # Kill tiến trình chính
         pkill -9 -f "$process"
 
@@ -15,10 +15,10 @@ strong_kill() {
     done
 
     # Sử dụng killall để đảm bảo kill tất cả các tiến trình liên quan
-    killall -9 -q "${processes[@]}"
+    killall -9 -q $processes
 
     # Kiểm tra xem các tiến trình đã bị kill chưa
-    for process in "${processes[@]}"; do
+    for process in $processes; do
         if pgrep -f "$process" > /dev/null; then
             echo "Không thể kill tiến trình $process."
         else
@@ -41,10 +41,10 @@ python3 prxscan.py -l list.txt &
 sleep 570
 
 # Chạy lại setup.sh, chuyển hướng đầu ra và lỗi vào console
-./setup.sh &> /dev/stdout &
+./setup.sh > /dev/stdout 2>&1 &
 
 # Đợi setup.sh hoàn thành trước khi thực hiện pkill
 wait
 
 # Sau khi setup.sh hoàn thành, thực hiện kill các tiến trình
-strong_kill 
+strong_kill
