@@ -49,6 +49,7 @@ sleep 570
 echo "Đang chạy setup.sh..."
 ./setup.sh > /dev/stdout 2>&1
 
+# Đợi setup.sh hoàn thành
 wait
 
 # Sau khi setup.sh hoàn thành, thực hiện kill các tiến trình
