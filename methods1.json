@@ -17,6 +17,12 @@
         "time": 120,
         "visibility": "VIP"
     },
+    "superkill": {
+        "command": "node --max-old-space-size=65536 superkill -m GET -u url -p live.txt -q true -r 999 --full true --ratelimit true --debug false --delay 1",
+        "url": "url",
+        "time": 120,
+        "visibility": "VIP"    
+    },
     "http2": {
         "command": "node --max-old-space-size=65536 http2 url 120 5 5 live.txt --redirect true --ratelimit true --query true",
         "url": "url",
