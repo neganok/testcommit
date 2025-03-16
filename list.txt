@@ -5,16 +5,16 @@ https://proxyspace.pro/http.txt
 https://proxyspace.pro/https.txt
 
 
-https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&protocol=http&proxy_format=ipport&format=text&timeout=7000
-https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&country=all&protocol=http&proxy_format=ipport&format=text&timeout=7000
-https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&country=all&protocol=https&proxy_format=ipport&format=text&timeout=7000
+https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&protocol=http&proxy_format=ipport&format=text&timeout=2000
+https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&country=all&protocol=http&proxy_format=ipport&format=text&timeout=2000
+https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&country=all&protocol=https&proxy_format=ipport&format=text&timeout=2000
 https://free-proxy-list.net/
 https://www.us-proxy.org/
 https://free-proxy-list.net/uk-proxy.html
 https://www.sslproxies.org/
 https://free-proxy-list.net/anonymous-proxy.html
-https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=7000&country=all&ssl=all&anonymity=all
-https://api.proxyscrape.com/v2/?request=displayproxies&protocol=https&timeout=7000&country=all&ssl=all&anonymity=all
+https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=2000&country=all&ssl=all&anonymity=all
+https://api.proxyscrape.com/v2/?request=displayproxies&protocol=https&timeout=2000&country=all&ssl=all&anonymity=all
 https://spys.me/proxy.txt
 
 https://proxy.baidunow.icu/http.txt
