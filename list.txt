@@ -19,3 +19,7 @@ https://raw.githubusercontent.com/Zaeem20/FREE_PROXIES_LIST/refs/heads/master/ht
 https://raw.githubusercontent.com/Zaeem20/FREE_PROXIES_LIST/refs/heads/master/https.txt
 https://raw.githubusercontent.com/themiralay/Proxy-List-World/master/data.txt
 https://spys.me/proxy.txt
+
+https://proxy.baidunow.icu/http.txt
+https://free.qiucg.com/proxy.txt
+https://xn--mnqu23e2hf.xyz/proxy.txt
