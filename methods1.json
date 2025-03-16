@@ -1,6 +1,6 @@
 {
     "http1": {
-        "command": "node --max-old-space-size=65536 http1 POST url live.txt 120 999 10 randomstring="true"",
+        "command": "node --max-old-space-size=65536 http1 POST url live.txt 120 999 10 randomstring=true",
         "url": "url",
         "time": 120,
         "visibility": "VIP"
