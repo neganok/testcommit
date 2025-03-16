@@ -24,7 +24,7 @@
         "visibility": "VIP"
     },
     "superkill": {
-        "command": "node --max-old-space-size=65536 superkill -m POST -u url -s 120 -t 10 -r 120 -p live.txt -v 2 --full true --delay 1 -d false ",
+        "command": "node --max-old-space-size=65536 superkill -m POST -u url -s 120 -t 10 -r 999 -p live.txt -v 2 --full true --delay 1 -d false ",
         "url": "url",
         "time": 120,
         "visibility": "VIP"
