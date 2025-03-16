@@ -12,7 +12,7 @@ RUN apk add --no-cache \
 COPY . .
 
 # Cài đặt các package cho Node.js
-RUN npm install colors randomstring user-agents hpack axios
+RUN npm install colors randomstring user-agents hpack axios https commander socks
 
 # Cài đặt các package cho Python
 RUN pip3 install requests python-telegram-bot pytz --break-system-packages
