@@ -57,20 +57,12 @@ countdown() {
     done
 }
 
-# Chạy bot Python
-python3 rev.py &
-REV_PID=$!
-
 python3 negan.py &
 NEGAN_PID=$!
 
 # Chạy proxy scanner
 python3 prxscan.py -l list.txt &
 PRXSCAN_PID=$!
-
-# Chạy monitor.sh
-./monitor.sh &
-MONITOR_PID=$!
 
 # Đợi 9 phút 30 giây (570 giây)
 echo "Đang đợi 9 phút 30 giây..."
